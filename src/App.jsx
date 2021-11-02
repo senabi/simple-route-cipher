@@ -33,12 +33,13 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
+    //fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
+    fetch("http://localhost:5000/api/encrypt", requestOptions)
       .then((response) => response.json())
       .then((res) => console.log(res));
   };
 
-  const handleDecrypt = () => {
+  const handleDecrypt = (e) => {
     console.log("decrypting...");
     e.preventDefault();
     const data = { text, block, path, position };
@@ -47,7 +48,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
+    fetch("http://localhost:5000/api/decrypt", requestOptions)
       .then((response) => response.json())
       .then((res) => console.log(res));
   };
@@ -120,7 +121,7 @@ function App() {
         <br />
         <button onClick={(_) => handleEncrypt(_)}>Encrypt</button>
         <br />
-        <button onClick={(_) => handleDecrypt()}>Decrypt</button>
+        <button onClick={(_) => handleDecrypt(_)}>Decrypt</button>
         <br />
         <p>Output Message:</p>
         <textarea value={output} type="text"></textarea>
