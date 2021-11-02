@@ -64,6 +64,21 @@ class CircularLinkedList:
                 if (temp == self.head):
                     break
 
+def eliminar_tilde(texto):
+  tilde_table = str.maketrans('áéíóúÁÉÍÓÚ','aeiouAEIOU', '´')
+  return texto.translate(tilde_table)
+
+def a_mayuscula(texto):
+  return texto.upper()
+
+def remove_punctuation(texto):
+  return "".join(c for c in texto if c.isalnum())
+
+def preprocesar_texto(texto):
+  texto = eliminar_tilde(texto)
+  texto = a_mayuscula(texto)
+  texto = remove_punctuation(texto)
+  return texto
 
 def route_cipher(plainText, n=4, init_position=0, clockwise=True):
     plainText = preprocesar_texto(plainText)
