@@ -351,7 +351,7 @@ def transposicion_serie_decipher(cipherText, series_mode=0):
     cipherText = preprocesar_texto(cipherText)
     text_idx = []
     for i in range(len(cipherText)):
-        text_idx.append(i)
+        text_idx.append(i+1)
 
     decipherText = []
     for i in range(len(cipherText)):
@@ -362,12 +362,12 @@ def transposicion_serie_decipher(cipherText, series_mode=0):
         pares, other = serie_pares_cipher(pares)
         cipher_idx = primes_idx + pares + other
     else:
-        fib_idx, pares = serie_fibonacci_cipher(plainText)
+        fib_idx, pares = serie_fibonacci_cipher(text_idx)
         pares, other = serie_fibonacci_cipher(pares)
-        cipher_idx = primes_idx + pares + other
+        cipher_idx = fib_idx + pares + other
 
     for i in range(len(cipher_idx)):
-        decipherText[cipher_idx[i]] = cipherText[i]
+        decipherText[cipher_idx[i]-1] = cipherText[i]
     output = ""
     for c in decipherText:
         output += c
