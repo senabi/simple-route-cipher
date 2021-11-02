@@ -40,6 +40,16 @@ function App() {
 
   const handleDecrypt = () => {
     console.log("decrypting...");
+    e.preventDefault();
+    const data = { text, secret, path, position };
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
+      .then((response) => response.json())
+      .then((res) => console.log(res));
   };
 
   const handleCopy = () => {
