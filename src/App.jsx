@@ -137,6 +137,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <p>Route Transposition</p>
         <p>Block size:</p>
         <select onChange={(e) => handleKey(e)} defaultValue="">
           <option value="">select size</option>
@@ -209,7 +210,7 @@ function App() {
         ></textarea>
         <br />
         <br />
-        <p>Num: </p>
+        <p>Modo: </p>
         <select onChange={(e) => handleNum(e)} defaultValue="">
           <option value="">select position</option>
           <option value={0}>0</option>
