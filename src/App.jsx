@@ -121,7 +121,7 @@ function App() {
   };
 
   const handleCopy2 = () => {
-    setText2(output);
+    setText2(output2);
   };
 
   const handleNum = (e) => {

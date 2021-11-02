@@ -280,91 +280,99 @@ def route_decipher(cipherText, n=4, init_position=0, clockwise=True):
             decipherText += decipherBlock[i][j]
     return decipherText
 
+
 def es_primo(num):
-  if num > 1:
-    for i in range(2, num//2+1):
-      if (num % i) == 0:
+    if num > 1:
+        for i in range(2, num // 2 + 1):
+            if (num % i) == 0:
+                return False
+        return True
+    else:
         return False
-    return True
-  else:
-    return False
+
 
 def serie_primos_cipher(idx_array):
-  primes_idx = []
-  temp = []
-  for i in idx_array:
-    if(es_primo(i)):
-      primes_idx.append(i)
-    else:
-      temp.append(i)
-  return primes_idx, temp
+    primes_idx = []
+    temp = []
+    for i in idx_array:
+        if es_primo(i):
+            primes_idx.append(i)
+        else:
+            temp.append(i)
+    return primes_idx, temp
+
 
 def serie_pares_cipher(idx_array):
-  pares_idx = []
-  temp = []
+    pares_idx = []
+    temp = []
 
-  for i in idx_array:
-    if (i % 2 == 0):
-      pares_idx.append(i)
-    else:
-      temp.append(i)
-  return pares_idx, temp
+    for i in idx_array:
+        if i % 2 == 0:
+            pares_idx.append(i)
+        else:
+            temp.append(i)
+    return pares_idx, temp
+
 
 def serie_fibonacci_cipher(text):
-  n = len(text)
-  return []
+    n = len(text)
+    return []
+
 
 def serie_primos_decipher(text):
-  1
+    1
 
-def transposicion_serie_cipher(plainText, series_mode = 0):
-  plainText = preprocesar_texto(plainText)
-  text_idx = []
-  for i in range(len(plainText)):
-    text_idx.append(i)
 
-  cipherText = ""
-  cipher_idx = []
-  if series_mode == 0:
-    primes_idx, pares = serie_primos_cipher(text_idx)
-    pares, other = serie_pares_cipher(pares)
-    cipher_idx = primes_idx + pares + other
+def transposicion_serie_cipher(plainText, series_mode=0):
+    plainText = preprocesar_texto(plainText)
+    text_idx = []
+    for i in range(len(plainText)):
+        text_idx.append(i)
 
-  else:
-    fib_idx, pares = serie_fibonacci_cipher(plainText)
-    pares, other = serie_fibonacci_cipher(pares)
-    cipher_idx = fib_idx + pares + other
+    cipherText = ""
+    cipher_idx = []
+    if series_mode == 0:
+        primes_idx, pares = serie_primos_cipher(text_idx)
+        pares, other = serie_pares_cipher(pares)
+        cipher_idx = primes_idx + pares + other
 
-  for i in cipher_idx:
-    cipherText += plainText[i]
+    else:
+        fib_idx, pares = serie_fibonacci_cipher(plainText)
+        pares, other = serie_fibonacci_cipher(pares)
+        cipher_idx = fib_idx + pares + other
 
-  return cipherText
+    for i in cipher_idx:
+        cipherText += plainText[i]
 
-def transposicion_serie_decipher(cipherText, series_mode = 0):
-  cipherText = preprocesar_texto(cipherText)
-  text_idx = []
-  for i in range(len(cipherText)):
-    text_idx.append(i)
-  
-  decipherText = []
-  for i in range(len(cipherText)):
-    decipherText.append(0)
-  
-  if series_mode == 0:
-    primes_idx, pares = serie_primos_cipher(text_idx)
-    pares, other = serie_pares_cipher(pares)
-    cipher_idx = primes_idx + pares + other
-  else:
-    fib_idx, pares = serie_fibonacci_cipher(plainText)
-    pares, other = serie_fibonacci_cipher(pares)
-    cipher_idx = primes_idx + pares + other
-  
-  for i in range(len(cipher_idx)):
-    decipherText[cipher_idx[i]] = cipherText[i]
-  output = ""
-  for c in decipherText:
-    output+=c
-  return output
+    return cipherText
+
+
+def transposicion_serie_decipher(cipherText, series_mode=0):
+    cipherText = preprocesar_texto(cipherText)
+    text_idx = []
+    for i in range(len(cipherText)):
+        text_idx.append(i)
+
+    decipherText = []
+    for i in range(len(cipherText)):
+        decipherText.append(0)
+
+    if series_mode == 0:
+        primes_idx, pares = serie_primos_cipher(text_idx)
+        pares, other = serie_pares_cipher(pares)
+        cipher_idx = primes_idx + pares + other
+    else:
+        fib_idx, pares = serie_fibonacci_cipher(plainText)
+        pares, other = serie_fibonacci_cipher(pares)
+        cipher_idx = primes_idx + pares + other
+
+    for i in range(len(cipher_idx)):
+        decipherText[cipher_idx[i]] = cipherText[i]
+    output = ""
+    for c in decipherText:
+        output += c
+    return output
+
 
 @app.route("/api/encrypt", methods=["GET", "POST"])
 @cross_origin()
@@ -384,6 +392,7 @@ def encrypt():
     ans = {}
     ans["cipherText"] = cipherText
     return jsonify(ans)
+
 
 @app.route("/api/encrypt2", methods=["GET", "POST"])
 @cross_origin()
@@ -418,6 +427,7 @@ def decrypt():
     ans = {}
     ans["decipherText"] = decipherText
     return jsonify(ans)
+
 
 @app.route("/api/decrypt2", methods=["GET", "POST"])
 @cross_origin()
