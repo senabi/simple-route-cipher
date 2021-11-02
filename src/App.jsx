@@ -36,7 +36,10 @@ function App() {
     //fetch("https://jsonplaceholder.typicode.com/posts", requestOptions)
     fetch("http://localhost:5000/api/encrypt", requestOptions)
       .then((response) => response.json())
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+        setOutput(res["cipherText"]);
+      });
   };
 
   const handleDecrypt = (e) => {
@@ -50,7 +53,10 @@ function App() {
     };
     fetch("http://localhost:5000/api/decrypt", requestOptions)
       .then((response) => response.json())
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+        setOutput(res["decipherText"]);
+      });
   };
 
   const handleCopy = () => {

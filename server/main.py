@@ -30,55 +30,62 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def hello():
     return "<h1>python api</h1>"
 
+
 class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
- 
+
+
 class CircularLinkedList:
-     
     def __init__(self):
         self.head = None
+
     def push(self, data):
         ptr1 = Node(data)
         temp = self.head
-         
+
         ptr1.next = self.head
- 
+
         if self.head is not None:
-            while(temp.next != self.head):
+            while temp.next != self.head:
                 temp = temp.next
             temp.next = ptr1
- 
+
         else:
             ptr1.next = ptr1
- 
+
         self.head = ptr1
- 
+
     def printList(self):
         temp = self.head
         if self.head is not None:
-            while(True):
-                print (temp.data, end=" ")
+            while True:
+                print(temp.data, end=" ")
                 temp = temp.next
-                if (temp == self.head):
+                if temp == self.head:
                     break
 
+
 def eliminar_tilde(texto):
-  tilde_table = str.maketrans('áéíóúÁÉÍÓÚ','aeiouAEIOU', '´')
-  return texto.translate(tilde_table)
+    tilde_table = str.maketrans("áéíóúÁÉÍÓÚ", "aeiouAEIOU", "´")
+    return texto.translate(tilde_table)
+
 
 def a_mayuscula(texto):
-  return texto.upper()
+    return texto.upper()
+
 
 def remove_punctuation(texto):
-  return "".join(c for c in texto if c.isalnum())
+    return "".join(c for c in texto if c.isalnum())
+
 
 def preprocesar_texto(texto):
-  texto = eliminar_tilde(texto)
-  texto = a_mayuscula(texto)
-  texto = remove_punctuation(texto)
-  return texto
+    texto = eliminar_tilde(texto)
+    texto = a_mayuscula(texto)
+    texto = remove_punctuation(texto)
+    return texto
+
 
 def route_cipher(plainText, n=4, init_position=0, clockwise=True):
     plainText = preprocesar_texto(plainText)
@@ -267,7 +274,6 @@ def route_decipher(cipherText, n=4, init_position=0, clockwise=True):
         i += itr.data[0]
         j += itr.data[1]
         direction += 1
-
     decipherText = ""
     for i in range(lim_h):
         for j in range(lim_w):
@@ -280,16 +286,18 @@ def route_decipher(cipherText, n=4, init_position=0, clockwise=True):
 def encrypt():
     parameters = request.get_json()
     print(parameters)
-    block = parameters["block"]
+    # return jsonify(parameters)
+    block = int(parameters["block"])
     text = parameters["text"]
     path = parameters["path"]
-    position = parameters["position"]
+    position = int(parameters["position"])
 
-    # plainText = "enteryourmessage"
-    cipherText = route_cipher(text, n=block, clockwise=path, init_position=position)
+    clockwise = True if path == "clockwise" else False
+    cipherText = route_cipher(
+        text, n=block, clockwise=clockwise, init_position=position
+    )
     ans = {}
-    ans['cipherText'] = cipherText
-    # decipherText = route_decipher(cipherText, n=5, clockwise=False, init_position=3)
+    ans["cipherText"] = cipherText
     return jsonify(ans)
 
 
@@ -298,15 +306,18 @@ def encrypt():
 def decrypt():
     parameters = request.get_json()
     print(parameters)
-    block = parameters["block"]
+
+    block = int(parameters["block"])
     text = parameters["text"]
     path = parameters["path"]
-    position = parameters["position"]
-    # plainText = "enteryourmessage"
-    # cipherText = route_cipher(plainText, n=5, clockwise=False, init_position=3)
-    decipherText = route_decipher(text, n=block, clockwise=path, init_position=position)
+    position = int(parameters["position"])
+
+    clockwise = True if path == "clockwise" else False
+    decipherText = route_decipher(
+        text, n=block, clockwise=clockwise, init_position=position
+    )
     ans = {}
-    ans['decipherText'] = decipherText
+    ans["decipherText"] = decipherText
     return jsonify(ans)
 
 
