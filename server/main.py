@@ -30,6 +30,40 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def hello():
     return "<h1>python api</h1>"
 
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+ 
+class CircularLinkedList:
+     
+    def __init__(self):
+        self.head = None
+    def push(self, data):
+        ptr1 = Node(data)
+        temp = self.head
+         
+        ptr1.next = self.head
+ 
+        if self.head is not None:
+            while(temp.next != self.head):
+                temp = temp.next
+            temp.next = ptr1
+ 
+        else:
+            ptr1.next = ptr1
+ 
+        self.head = ptr1
+ 
+    def printList(self):
+        temp = self.head
+        if self.head is not None:
+            while(True):
+                print (temp.data, end=" ")
+                temp = temp.next
+                if (temp == self.head):
+                    break
+
 
 def route_cipher(plainText, n=4, init_position=0, clockwise=True):
     plainText = preprocesar_texto(plainText)
@@ -237,9 +271,11 @@ def encrypt():
     position = parameters["position"]
 
     # plainText = "enteryourmessage"
-    # cipherText = route_cipher(text, n=5, clockwise=False, init_position=3)
+    cipherText = route_cipher(text, n=block, clockwise=path, init_position=position)
+    ans = {}
+    ans['cipherText'] = cipherText
     # decipherText = route_decipher(cipherText, n=5, clockwise=False, init_position=3)
-    return jsonify(parameters)
+    return jsonify(ans)
 
 
 @app.route("/api/decrypt", methods=["GET", "POST"])
@@ -253,8 +289,10 @@ def decrypt():
     position = parameters["position"]
     # plainText = "enteryourmessage"
     # cipherText = route_cipher(plainText, n=5, clockwise=False, init_position=3)
-    # decipherText = route_decipher(cipherText, n=5, clockwise=False, init_position=3)
-    return jsonify(parameters)
+    decipherText = route_decipher(text, n=block, clockwise=path, init_position=position)
+    ans = {}
+    ans['decipherText'] = decipherText
+    return jsonify(ans)
 
 
 if __name__ == "__main__":
