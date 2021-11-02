@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [secret, setSecret] = useState(null);
+  const [block, setBlock] = useState(null);
   const [path, setPath] = useState(null);
   const [text, setText] = useState("Enter message");
   const [output, setOutput] = useState("Encrypted message");
@@ -10,7 +10,7 @@ function App() {
 
   const handleKey = (e) => {
     console.log(e.target.value);
-    setSecret(e.target.value);
+    setBlock(e.target.value);
   };
 
   const handlePath = (e) => {
@@ -27,7 +27,7 @@ function App() {
     console.log("encrypting...");
 
     e.preventDefault();
-    const data = { text, secret, path, position };
+    const data = { text, block, path, position };
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ function App() {
   const handleDecrypt = () => {
     console.log("decrypting...");
     e.preventDefault();
-    const data = { text, secret, path, position };
+    const data = { text, block, path, position };
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -71,9 +71,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Secret key:</p>
+        <p>Block size:</p>
         <select onChange={(e) => handleKey(e)} defaultValue="">
-          <option value="">select key</option>
+          <option value="">select size</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
           <option value={3}>3</option>
           <option value={4}>4</option>
           <option value={5}>5</option>
@@ -126,7 +128,7 @@ function App() {
         <button onClick={(_) => handleReset()}>Reset</button>
         <br />
         <button onClick={(_) => handleCopy()}>Copy Output to Input</button>
-        <p>secret: {secret}</p>
+        <p>block: {block}</p>
         <p>path: {path}</p>
         <p>position: {position}</p>
         <p>input: {text}</p>
