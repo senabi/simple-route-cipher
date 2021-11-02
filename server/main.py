@@ -138,18 +138,32 @@ def route_cipher(plainText, n=4, init_position=0, clockwise=True):
     lim_w = len(block[0])
     lim_h = len(block)
 
-    if init_position == 0:
+    if(clockwise):
+      if(init_position == 0):
         start_i = 0
-        start_j = lim_w - 1
-    elif init_position == 1:
-        start_i = lim_h - 1
-        start_j = lim_w - 1
-    elif init_position == 2:
-        start_i = lim_h - 1
+        start_j = lim_w-1
+      elif(init_position == 1):
+        start_i = lim_h-1
+        start_j = lim_w-1
+      elif(init_position == 2):
+        start_i = lim_h-1
         start_j = 0
-    elif init_position == 3:
+      elif(init_position == 3):
         start_i = 0
         start_j = 0
+    else:
+      if(init_position == 0):
+        start_i = 0
+        start_j = lim_w-1
+      elif(init_position == 1):
+        start_i = 0
+        start_j = 0
+      elif(init_position == 2):
+        start_i = lim_h-1
+        start_j = 0
+      elif(init_position == 3):
+        start_i = lim_h-1
+        start_j = lim_w-1
 
     w_iter = lim_w
     h_iter = lim_h
@@ -227,18 +241,32 @@ def route_decipher(cipherText, n=4, init_position=0, clockwise=True):
     lim_w = len(decipherBlock[0])
     lim_h = len(decipherBlock)
 
-    if init_position == 0:
+    if(clockwise):
+      if(init_position == 0):
         start_i = 0
-        start_j = lim_w - 1
-    elif init_position == 1:
-        start_i = lim_h - 1
-        start_j = lim_w - 1
-    elif init_position == 2:
-        start_i = lim_h - 1
+        start_j = lim_w-1
+      elif(init_position == 1):
+        start_i = lim_h-1
+        start_j = lim_w-1
+      elif(init_position == 2):
+        start_i = lim_h-1
         start_j = 0
-    elif init_position == 3:
+      elif(init_position == 3):
         start_i = 0
         start_j = 0
+    else:
+      if(init_position == 0):
+        start_i = 0
+        start_j = lim_w-1
+      elif(init_position == 1):
+        start_i = 0
+        start_j = 0
+      elif(init_position == 2):
+        start_i = lim_h-1
+        start_j = 0
+      elif(init_position == 3):
+        start_i = lim_h-1
+        start_j = lim_w-1
 
     w_iter = lim_w
     h_iter = lim_h
